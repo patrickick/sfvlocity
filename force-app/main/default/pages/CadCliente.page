@@ -1,0 +1,62 @@
+<apex:page standardController="Account" extensions="clsCadCliente" id="pgCadCliente" docType="html-5.0">
+    <head>
+        <title>...::: Novo Cliente :::...</title>
+    </head>
+    <apex:form id="frmCadCliente">
+        <br/>
+        <br/>
+        <apex:inputHidden id="hEndPesquisado" value="{!EndPesquisado}"/>
+        <apex:inputHidden id="hId" value="{!Account.Id}"/>
+        <apex:inputHidden id="hProdutoEmpiricus" value="{!Account.Produtos_Empiricus__c}"/>
+        <apex:inputHidden id="hProdutoInversa" value="{!Account.Produtos_Inversa__c}"/>
+        <apex:inputHidden id="hProdutoJolivi" value="{!Account.Produtos_Jolivi__c}"/>
+        <apex:inputHidden id="hCodigoIBGEEstado" value="{!CodigoIBGEEstado}"/>
+        <apex:inputHidden id="hCodigoIBGECidade" value="{!CodigoIBGECidade}"/>
+        <apex:inputHidden id="hRecordTypeId" value="{!Account.RecordTypeId}"/>
+        <apex:inputHidden id="hFirstName" value="{!Account.FirstName}"/>
+        <apex:inputHidden id="hLastName" value="{!Account.LastName}"/>
+        <apex:inputHidden id="hType" value="{!Account.Type}"/>
+        <apex:pagemessages id="ErrorMsg" />
+        
+        <br/>
+        <br/>
+        <apex:actionStatus startText="Consultando Endereço..."  stopText="" id="statusLogic"/>
+        <apex:actionStatus startText="Criando Cliente / Integrando Loja ..."  stopText="" id="statusLogicCreate"/>
+        <apex:pageBlock id="pgCadCliente">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Salvar" action="{!SalvaAcc}"  rerender="frmCadCliente" status="statusLogicCreate"/>
+                <apex:commandButton value="Cancelar" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+            <apex:pageblockSection id="pbDados" title="Dados do Cliente" collapsible="false"  columns="2">
+                <apex:input type="text" id="FirstName" label="Primeiro Nome" value="{!FirstName}" size="40" required="true"/>
+                <apex:input type="text" id="LastName" label="Sobrenome" value="{!LastName}" size="40" required="true"/>
+                <apex:inputField value="{!Account.CPF__c}" id="CPF__c" required="true"/>
+                <apex:inputField value="{!Account.PersonMobilePhone}" id="PersonMobilePhone" required="true"/>
+                <apex:inputField value="{!Account.PersonEmail}" id="PersonEmail" required="true"/>
+                <apex:inputField value="{!Account.PersonBirthdate}" id="PersonBirthdate" />
+                <apex:inputField value="{!Account.CEPCadastro__c}" id="CEPCadastro__c" required="true">
+                <apex:actionSupport event="onblur" 
+                                action="{!PesquisaCep}" 
+                                rerender="outEndereco,frmCadCliente" status="statusLogic" />
+                </apex:inputField>
+            </apex:pageblockSection>
+            
+            <apex:outputPanel rendered="{!EndPesquisado}" id="outEndereco"> 
+                <apex:pageblockSection id="pbDadosEnd" title="Dados do Endereço" collapsible="false"  columns="2">
+                    <apex:inputField value="{!Account.RUA__c}" id="RUA__c" required="true"/>
+                    <apex:inputField value="{!Account.Numero__c}" id="Numero__c" required="true"/>
+                    <apex:inputField value="{!Account.Complemento__c}" id="Complemento__c" />
+                    <apex:inputField value="{!Account.Bairro__c}" id="Bairro__c" required="true"/>
+                    <apex:inputField value="{!Account.Estado__c}" id="Estado__c" required="true"/>
+                    <apex:inputField value="{!Account.Cidade__c}" id="Cidade__c" required="true"/>
+                    <apex:selectList value="{!TipoEndereco}" size="1" onchange="" label="Tipo Endereco" required="true" id="ddlPossuiKit">
+                        <apex:selectOption itemLabel="-- Selecione --" itemValue="" ></apex:selectOption>
+                        <apex:selectOption itemLabel="Residencial" itemValue="Residencial"></apex:selectOption>
+                        <apex:selectOption itemLabel="Trabalho" itemValue="Trabalho"></apex:selectOption>
+                    </apex:selectList>
+                </apex:pageblockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+    
+</apex:page>
