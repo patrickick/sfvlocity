@@ -2,7 +2,7 @@
     <head>
         <title>...::: Novo Cliente :::...</title>
     </head>
-    <apex:form id="frmCadCliente">
+    <apex:form id="frmCadCliente"> 
         <br/>
         <br/>
         <apex:inputHidden id="hEndPesquisado" value="{!EndPesquisado}"/>
