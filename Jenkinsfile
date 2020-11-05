@@ -12,7 +12,7 @@ pipeline {
 
         // DEV
         USER_DEV = 'patrick.guimaraes-6039383736@vlocityapps.com'
-        CONNECTED_APP_CONSUMER_KEY_DEV = credentials('SF_CONSUMER_KEY')
+        CONNECTED_APP_CONSUMER_KEY_DH = credentials('SF_CONSUMER_KEY')
 
         // QA
        // USER_QA = 'adminjenkins@grupocobra.com.cobraqa'
@@ -70,7 +70,7 @@ pipeline {
                 expression{ env.DEPLOY_DEV }
             }
             steps {
-                bat "sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY_DEV} --username ${USER_DEV} --jwtkeyfile ${JWT_KEY_CRED} --setdefaultdevhubusername --instanceurl ${SFDX_HOST_PRD}"
+                bat "sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY_DH} --username ${USER_DEV} --jwtkeyfile ${JWT_KEY_CRED} --setdefaultdevhubusername --instanceurl ${SFDX_HOST_PRD}"
 
                 dir ('cobraProject') {
                     bat "sfdx force:mdapi:deploy -d ${PACKAGE_NAME} -u ${USER_DEV} -w 15"
