@@ -49,13 +49,13 @@ pipeline {
             }
         }
 
-        stage('Code Analysis') {
-            steps {                
-                withSonarQubeEnv('SonarQube LDC') {
-                    bat "sonar-scanner -Dproject.settings=./sonar-project.properties"
-                }
-            }
-        }
+   //     stage('Code Analysis') {
+   //         steps {                
+   //             withSonarQubeEnv('SonarQube LDC') {
+   //                 bat "sonar-scanner -Dproject.settings=./sonar-project.properties"
+   //             }
+   //         }
+   //     }
 
         stage('Convert') {
             steps {
@@ -112,4 +112,5 @@ pipeline {
             }
         }
     }
+}
 }
