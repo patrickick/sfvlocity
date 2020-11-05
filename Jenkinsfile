@@ -29,7 +29,7 @@ node {
         println 'checkout' 
     }
 
-  /*  withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
+    withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
        println 'withCredentials' 
         stage('Create Scratch Org') {
           println 'Create Scratch Org' 
@@ -42,7 +42,7 @@ node {
             }
             if (rc != 0) { error 'hub org authorization failed' }
 
-            // need to pull out assigned username
+          /*  // need to pull out assigned username
               if (isUnix()) {
                 rmsg = sh returnStdout: true, script: "${toolbelt} force:org:create --apiversion=47.0 -f config/enterprise-scratch-def.json --json --setdefaultusername"
               }else{
