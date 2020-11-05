@@ -12,19 +12,32 @@ node {
     def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
     println 'KEY IS' 
     println JWT_KEY_CRED_ID
+    println 'HUB_ORG'
+    println HUB_ORG
+    println 'SFDC_HOST'
+    println SFDC_HOST
+    println 'CONNECTED_APP_CONSUMER_KEY'
+    println CONNECTED_APP_CONSUMER_KEY
+    println 'SFDC_USERNAME'
+    println SFDC_USERNAME
     def toolbelt = tool 'toolbelt'
-
+    println 'toolbelt'
+    println toolbelt
     stage('checkout source') {
         // when running in multi-branch job, one must issue this command
         checkout scm
+        println 'checkout' 
     }
 
     withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
        println 'withCredentials' 
         stage('Create Scratch Org') {
+          println 'Create Scratch Org' 
             if (isUnix()) {
+              println 'if'
                 rc = sh returnStatus: true, script: "${toolbelt} force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
             }else{
+                println 'else'
                  rc = bat returnStatus: true, script: "\"${toolbelt}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
             }
             if (rc != 0) { error 'hub org authorization failed' }
