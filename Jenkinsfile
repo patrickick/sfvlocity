@@ -8,11 +8,11 @@ pipeline {
         DEPLOY_DEV                     = false
         //DEPLOY_QA                      = false
         //DEPLOY_E2E                     = false
-        JWT_KEY_CRED                   = credentials('JWT_KEY_CRED')
+        SF_CONSUMER_KEY                   = credentials('SF_CONSUMER_KEY')
 
         // DEV
         USER_DEV = 'patrick.guimaraes-6039383736@vlocityapps.com'
-        CONNECTED_APP_CONSUMER_KEY_DEV = credentials('JWT_KEY_CRED')
+        CONNECTED_APP_CONSUMER_KEY_DEV = credentials('SF_CONSUMER_KEY')
 
         // QA
        // USER_QA = 'adminjenkins@grupocobra.com.cobraqa'
