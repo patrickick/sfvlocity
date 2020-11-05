@@ -63,8 +63,8 @@ node {
             //if (robj.status != "ok") { error 'org creation failed: ' + robj.message }
             SFDC_USERNAME=robj.result.username
             robj = null
-            
-        }*/
+            */
+        }
         
           stage('Push To Test Org') {
               if (isUnix()) {
