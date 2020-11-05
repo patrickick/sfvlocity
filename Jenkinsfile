@@ -4,7 +4,7 @@ node {
 
     def BUILD_NUMBER=env.BUILD_NUMBER
     def RUN_ARTIFACT_DIR="tests/${BUILD_NUMBER}"
-    def SFDC_USERNAME
+    def SFDC_USERNAME = env.SFDC_USERNAME
 
     def HUB_ORG=env.HUB_ORG_DH
     def SFDC_HOST = env.SFDC_HOST_DH
@@ -65,18 +65,24 @@ node {
             robj = null
             */
         }
+
+         stage('Create Package') {
+              if (isUnix()) {
+                    rc = sh returnStatus: true, script: "\"${toolbelt}\" force:source:convert -d mdDeploysrc"
+              }else{
+                  rc = bat returnStatus: true, script: "\"${toolbelt}\" force:source:convert -d mdDeploysrc"
+              }
+         }
         
           stage('Push To Test Org') {
               if (isUnix()) {
-                    rc = sh returnStatus: true, script: "\"${toolbelt}\" force:source:push --targetusername ${HUB_ORG}"
+                    rc = sh returnStatus: true, script: "\"${toolbelt}\" force:mdapi:deploy -d mdDeploysrc --targetusername ${HUB_ORG}"
               }else{
-                  rc = bat returnStatus: true, script: "\"${toolbelt}\" force:source:push --targetusername ${HUB_ORG}"
+                  rc = bat returnStatus: true, script: "\"${toolbelt}\" force:mdapi:deploy -d mdDeploysrc --targetusername ${HUB_ORG}"
               }
             if (rc != 0) {
                 error 'push failed'
             }
-            
-          }
-             
+          }      
     }
 }
